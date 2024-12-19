@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>نموذج شحنة</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            direction: rtl;
+            background-color: #2f2f2f; /* خلفية داكنة */
+            color: #fff; /* النص باللون الأبيض */
+        }
+
+        form {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #3f3f3f; /* خلفية غامقة للنموذج */
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #e91e63; /* اللون الوردي الغامق */
+        }
+
+        label {
+            font-size: 16px;
+            margin-bottom: 5px;
+            display: block;
+            color: #b39ddb; /* اللون البنفسجي الغامق */
+        }
+
+        input[type="text"], input[type="file"] {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            background-color: #555; /* خلفية داكنة للحقل */
+            color: #fff; /* النص باللون الأبيض */
+        }
+
+        button {
+            width: 100%;
+            padding: 15px;
+            background-color: #9c27b0; /* اللون البنفسجي الغامق */
+            color: white;
+            font-size: 18px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #7b1fa2; /* التدرج البنفسجي عند التمرير */
+        }
+
+        .message {
+            font-size: 14px;
+            color: #e91e63; /* اللون الوردي */
+            margin-top: 10px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+    <form id="shipmentForm">
+        <h2>مرحبًا في شركة كريتيف</h2>
+
+        <label for="image">صورة الشحنة:</label>
+        <input type="file" id="image" name="image" accept="image/*" required>
+
+        <label for="shipperName">اسم الشاحن:</label>
+        <input type="text" id="shipperName" name="shipperName" placeholder="أدخل اسم الشاحن" required>
+
+        <label for="fromLocation">من أين الشحنة؟:</label>
+        <input type="text" id="fromLocation" name="fromLocation" placeholder="أدخل مكان انطلاق الشحنة" required>
+
+        <label for="toLocation">إلى أين الشحنة؟:</label>
+        <input type="text" id="toLocation" name="toLocation" placeholder="أدخل وجهة الشحنة" required>
+
+        <button type="button" id="sendToWhatsApp">إرسال إلى WhatsApp</button>
+
+        <p class="message" id="message"></p>
+    </form>
+
+    <script>
+        document.getElementById('sendToWhatsApp').addEventListener('click', function() {
+            var shipperName = document.getElementById('shipperName').value;
+            var fromLocation = document.getElementById('fromLocation').value;
+            var toLocation = document.getElementById('toLocation').value;
+
+            // بناء نص الرسالة
+            var message = `تفاصيل الشحنة:\nاسم الشاحن: ${shipperName}\nمن: ${fromLocation}\nإلى: ${toLocation}`;
+
+            // رقم الهاتف الذي سيتم إرسال الرسالة إليه (استبدله برقمك)
+            var phoneNumber = '201551659001'; 
+
+            // إنشاء رابط WhatsApp
+            var whatsappLink = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+
+            // التحقق من وجود بيانات
+            if (shipperName && fromLocation && toLocation) {
+                // فتح الرابط في WhatsApp
+                window.open(whatsappLink, '_blank');
+            } else {
+                // عرض رسالة تنبيه إذا كانت البيانات غير مكتملة
+                document.getElementById('message').textContent = 'يرجى ملء جميع الحقول.';
+                document.getElementById('message').style.color = 'red';
+            }
+        });
+    </script>
+
+</body>
+</html>
